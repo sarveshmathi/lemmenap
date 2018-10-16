@@ -19,12 +19,10 @@ class SoundSettingsTableViewController: UITableViewController {
     
     var numberOfLoops: Int?
     var songName: String?
-   // var delegate: SoundSettingsUpdatedDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //setUpDelegate()
         
         tableView.delaysContentTouches = false
         
@@ -46,14 +44,6 @@ class SoundSettingsTableViewController: UITableViewController {
         numberOfLoopsStepper.value = Double(numberOfLoops!)
         numberOfLoopsLabel.text = "\(numberOfLoops ?? 0) times"
     }
-    
-//    func soundSelected(song: String){
-//        print("point 2")
-//        songName = song
-//        songNameLabel.text = songName
-//        print("point 3")
-//        delegate?.updateSoundSettings(soundName: songName, numberOfLoops: numberOfLoops)
-//    }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
@@ -77,20 +67,8 @@ class SoundSettingsTableViewController: UITableViewController {
         } else {
             numberOfLoopsLabel.text = "\(numberOfLoops ?? 0) times"
         }
-        
-        //delegate?.updateSoundSettings(soundName: songName, numberOfLoops: numberOfLoops)
+  
         UserDefaults.standard.set(numberOfLoops, forKey: "alarmRepeat")
     }
     
-//    func setUpDelegate(){
-//        let homeVC = tabBarController?.viewControllers?.first as! HomeViewController
-//        delegate = homeVC
-//    }
-    
-
-    
 }
-
-//protocol SoundSettingsUpdatedDelegate {
-//    func updateSoundSettings(soundName: String, numberOfLoops: Int)
-//}

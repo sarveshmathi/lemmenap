@@ -7,21 +7,29 @@
 //
 
 import UIKit
+import CoreData
 
 class SleepHistoryTableViewController: UITableViewController {
     
+    var sleepHistory: [NSManagedObject]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SleepEntryDetail")
+        do {
+            sleepHistory = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch data. \(error), \(error.userInfo)")
+        }
+   
         tableView.reloadData()
     }
     
@@ -40,17 +48,23 @@ class SleepHistoryTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SleepHistory.sharedInstance.allSleeps.count
+        return sleepHistory?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SleepHistoryCell", for: indexPath)
-        let sleepDetail = SleepHistory.sharedInstance.allSleeps[indexPath.row]
-        cell.textLabel?.text = "\(dateFormatter(date: (sleepDetail.sleepStart)))"
-        cell.detailTextLabel?.text = "\(timeString(time: sleepDetail.actualDuration)) minutes"
-
+        
+        let sleepDetail = sleepHistory![indexPath.row]
+        
+        let sleepDuration = (sleepDetail.value(forKeyPath: "sleepEnd") as! Date).timeIntervalSince(sleepDetail.value(forKeyPath: "sleepStart") as! Date)
+        
+        cell.textLabel?.text = "\(dateFormatter(date: (sleepDetail.value(forKeyPath: "sleepStart") as! Date)))"
+        cell.detailTextLabel?.text = "\(timeString(time: sleepDuration))"
+        
         return cell
     }
+    
+    
     
     func dateFormatter(date: Date) -> String {
         let dateFormatter = DateFormatter()
@@ -65,25 +79,41 @@ class SleepHistoryTableViewController: UITableViewController {
         return String(format: "%02i:%02i", minutes, seconds)
     }
 
-    /*
+   
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
-
-    /*
+   
+    
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle:
+        UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        let sleepEntry = sleepHistory![indexPath.row]
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
         if editingStyle == .delete {
+            
+            managedContext.delete(sleepEntry)
+            do {
+               try managedContext.save()
+            } catch let error as NSError {
+                print("Could not delete. \(error), \(error.userInfo)")
+            }
+            
             // Delete the row from the data source
+            sleepHistory?.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            
+            
+        }
     }
-    */
+    
+
+   
 
  
 

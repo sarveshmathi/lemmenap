@@ -11,11 +11,9 @@ import Foundation
 struct SleepDetails{
     var sleepStart: Date
     var sleepEnd: Date
-  //  var selectedDuration: Int
     var actualDuration: TimeInterval {
         return sleepEnd.timeIntervalSince(sleepStart)
     }
-    let date: Date
     
 }
 

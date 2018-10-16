@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import SwiftySound //https://cocoapods.org/pods/SwiftySound
 import MediaPlayer
+import CoreData
 
 
 class HomeViewController: UIViewController, NewSoundSelectedDelegate {
@@ -22,8 +23,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
     @IBOutlet weak var durationSlider: UISlider!
     @IBOutlet weak var durationLabel: UILabel!
     
-    var sleepEntry: SleepDetails?
-    var sleepHistory: SleepHistory?
+
     var setSleepDuration: Int = 5 {
         didSet{
             durationLabel.text = "\(setSleepDuration) minutes"
@@ -45,6 +45,8 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
     var alarmSoundUrl: URL?
     var alarmSound: Sound?
 
+    var sleepHistory: [NSManagedObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -57,8 +59,6 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         
         removeTabbarItemsText()
         updatePreferences()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
     }
     
@@ -82,12 +82,6 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         alarmSound = Sound(url: alarmSoundUrl!)
     }
     
-//    func updateSoundSettings(soundName: String, numberOfLoops: Int){
-//        print("point5")
-//        alarmSoundName = soundName
-//        alarmRepeat = numberOfLoops
-//        print("point 6 \(alarmSoundName), \(alarmRepeat)")
-//    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
@@ -179,16 +173,31 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
             }
             sleepEndTime = Date()
             timer.invalidate()
-            uploadSleepEntry()
+            saveEntry(sleepStart: sleepStartTime!, sleepEnd: sleepEndTime!)
             resetUI()
         }
 
        
     }
     
-    func uploadSleepEntry(){
-        sleepEntry = SleepDetails(sleepStart: sleepStartTime!, sleepEnd: sleepEndTime!, date: Date())
-        SleepHistory.sharedInstance.allSleeps.append(sleepEntry!)
+    
+    func saveEntry(sleepStart: Date, sleepEnd: Date){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "SleepEntryDetail", in: managedContext)!
+        let sleepEntry = NSManagedObject(entity: entity, insertInto: managedContext)
+        sleepEntry.setValue(sleepStart, forKey: "sleepStart")
+        sleepEntry.setValue(sleepEnd, forKey: "sleepEnd")
+        
+        do {
+            try managedContext.save()
+            sleepHistory.append(sleepEntry)
+        } catch let error as NSError {
+            print("Could not save sleep entry. \(error), \(error.userInfo)")
+        }
+        
+        
     }
     
     func resetUI(){
@@ -213,11 +222,6 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
     func runTimer(){
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(HomeViewController.updateTimer)), userInfo: nil, repeats: true)
     }
-
-    @objc func applicationDidBecomeActive() {
-        //timer.fire()
-    }
-    
 
     
     @objc func updateTimer(){
@@ -247,7 +251,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
             self.startButton.transform = CGAffineTransform.identity
             }
             self.sleepEndTime = Date()
-            self.uploadSleepEntry()
+            self.saveEntry(sleepStart: self.sleepStartTime!, sleepEnd: self.sleepEndTime!)
         })
     }
     
