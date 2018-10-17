@@ -11,14 +11,16 @@ import MediaPlayer
 
 class SoundSettingsTableViewController: UITableViewController {
 
-    @IBOutlet weak var myVolumeViewParentView: UIView!
+    //@IBOutlet weak var myVolumeViewParentView: UIView!
    
     @IBOutlet weak var songNameLabel: UILabel!
     @IBOutlet weak var numberOfLoopsStepper: UIStepper!
     @IBOutlet weak var numberOfLoopsLabel: UILabel!
+    @IBOutlet weak var alarmVolumeSlider: UISlider!
     
     var numberOfLoops: Int?
     var songName: String?
+    var alarmVolume: Float?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +28,9 @@ class SoundSettingsTableViewController: UITableViewController {
         
         tableView.delaysContentTouches = false
         
-        myVolumeViewParentView.backgroundColor = UIColor.clear
-        let myVolumeView = MPVolumeView(frame: myVolumeViewParentView.bounds)
-        myVolumeViewParentView.addSubview(myVolumeView)
+//        myVolumeViewParentView.backgroundColor = UIColor.clear
+//        let myVolumeView = MPVolumeView(frame: myVolumeViewParentView.bounds)
+//        myVolumeViewParentView.addSubview(myVolumeView)
     
     }
     
@@ -38,11 +40,13 @@ class SoundSettingsTableViewController: UITableViewController {
     }
     
     func updatePreferences(){
-        songName = UserDefaults.standard.string(forKey: "alarmSoundName") ?? "cool"
+        songName = UserDefaults.standard.string(forKey: "alarmSoundName") ?? "calm"
         songNameLabel.text = songName
         numberOfLoops = UserDefaults.standard.integer(forKey: "alarmRepeat")
         numberOfLoopsStepper.value = Double(numberOfLoops!)
         numberOfLoopsLabel.text = "\(numberOfLoops ?? 0) times"
+        alarmVolume = UserDefaults.standard.float(forKey: "alarmVolume")
+        alarmVolumeSlider.value = alarmVolume!
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -71,4 +75,14 @@ class SoundSettingsTableViewController: UITableViewController {
         UserDefaults.standard.set(numberOfLoops, forKey: "alarmRepeat")
     }
     
+    
+    @IBAction func alarmVolumeChanged(_ sender: Any) {
+        
+        alarmVolume = alarmVolumeSlider.value
+        UserDefaults.standard.set(alarmVolume, forKey: "alarmVolume")
+    }
+    
+    
 }
+
+

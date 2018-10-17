@@ -11,7 +11,7 @@ import SwiftySound
 
 class SoundsTableViewController: UITableViewController {
     
-    var soundsArray: [String] = ["cool", "softwakeup"]
+    var soundsArray: [String] = ["calm", "classic", "sunrise", "jarring", "beep", "bounce", "bright", "trumpet", "neon", "rainforest", "soft", "rough"]
     var delegate: NewSoundSelectedDelegate?
 
     override func viewDidLoad() {
@@ -42,10 +42,15 @@ class SoundsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+            let cell = tableView.cellForRow(at: indexPath)
+        
+            let bgColorView = UIView()
+            bgColorView.backgroundColor = UIColor.darkGray
+            cell!.selectedBackgroundView = bgColorView
         
             Sound.stopAll()
             let sound = soundsArray[indexPath.row]
-            Sound.play(file: sound, fileExtension: "wav", numberOfLoops: 0)
+            Sound.play(file: sound, fileExtension: "mp3", numberOfLoops: 0)
             UserDefaults.standard.setValue(sound, forKey: "alarmSoundName")
             delegate?.soundSelected()
         }

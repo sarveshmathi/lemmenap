@@ -9,11 +9,22 @@
 /* Begin PBXBuildFile section */
 		06F064DB7E5ACD942F3CFAFA /* Pods_lemmenap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CF7CF821B44D4D14935E1B /* Pods_lemmenap.framework */; };
 		79387D372172005F003E50AA /* CustomButtonDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79387D362172005F003E50AA /* CustomButtonDesign.swift */; };
+		7983DE1A21760DE500469DEE /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983DE1921760DE500469DEE /* InfoTableViewController.swift */; };
 		7984C7E32172073E00BF0CAC /* CustomButtonBackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984C7E22172073E00BF0CAC /* CustomButtonBackgroundColor.swift */; };
-		7984C7E521721DB700BF0CAC /* cool.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7984C7E421721DB700BF0CAC /* cool.wav */; };
+		79A0D45E2175F454004EDA2D /* calm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4522175F452004EDA2D /* calm.mp3 */; };
+		79A0D45F2175F454004EDA2D /* rainforest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4532175F452004EDA2D /* rainforest.mp3 */; };
+		79A0D4602175F454004EDA2D /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4542175F453004EDA2D /* beep.mp3 */; };
+		79A0D4612175F454004EDA2D /* bright.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4552175F453004EDA2D /* bright.mp3 */; };
+		79A0D4622175F454004EDA2D /* sunrise.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4562175F453004EDA2D /* sunrise.mp3 */; };
+		79A0D4632175F454004EDA2D /* trumpet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4572175F453004EDA2D /* trumpet.mp3 */; };
+		79A0D4642175F454004EDA2D /* bounce.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4582175F453004EDA2D /* bounce.mp3 */; };
+		79A0D4652175F454004EDA2D /* neon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4592175F453004EDA2D /* neon.mp3 */; };
+		79A0D4662175F454004EDA2D /* soft.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D45A2175F453004EDA2D /* soft.mp3 */; };
+		79A0D4672175F454004EDA2D /* jarring.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D45B2175F453004EDA2D /* jarring.mp3 */; };
+		79A0D4682175F454004EDA2D /* rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D45C2175F453004EDA2D /* rough.mp3 */; };
+		79A0D4692175F454004EDA2D /* classic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D45D2175F454004EDA2D /* classic.mp3 */; };
 		79DEEE5D2174929A00DF80D3 /* SoundSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEEE5C2174929A00DF80D3 /* SoundSettingsTableViewController.swift */; };
 		79DEEE5F2174A31600DF80D3 /* SoundsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEEE5E2174A31600DF80D3 /* SoundsTableViewController.swift */; };
-		79DEEE612174AF8B00DF80D3 /* softwakeup.wav in Resources */ = {isa = PBXBuildFile; fileRef = 79DEEE602174AF8B00DF80D3 /* softwakeup.wav */; };
 		79DEEE632175170700DF80D3 /* empty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79DEEE622175170600DF80D3 /* empty.mp3 */; };
 		79DEEE662175937900DF80D3 /* lemmenap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 79DEEE642175937800DF80D3 /* lemmenap.xcdatamodeld */; };
 		79FECF0C216F82270059D6EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FECF0B216F82270059D6EA /* AppDelegate.swift */; };
@@ -22,18 +33,28 @@
 		79FECF13216F822D0059D6EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79FECF12216F822D0059D6EA /* Assets.xcassets */; };
 		79FECF16216F822D0059D6EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79FECF14216F822D0059D6EA /* LaunchScreen.storyboard */; };
 		79FECF1E216F831E0059D6EA /* SleepHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FECF1D216F831E0059D6EA /* SleepHistoryTableViewController.swift */; };
-		79FECF20216F97F00059D6EA /* SleepEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FECF1F216F97F00059D6EA /* SleepEntry.swift */; };
 		79FECF2221706A950059D6EA /* Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FECF2121706A950059D6EA /* Quotes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		64BF189305B6F70BA0BD135C /* Pods-lemmenap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lemmenap.release.xcconfig"; path = "Pods/Target Support Files/Pods-lemmenap/Pods-lemmenap.release.xcconfig"; sourceTree = "<group>"; };
 		79387D362172005F003E50AA /* CustomButtonDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonDesign.swift; sourceTree = "<group>"; };
+		7983DE1921760DE500469DEE /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		7984C7E22172073E00BF0CAC /* CustomButtonBackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonBackgroundColor.swift; sourceTree = "<group>"; };
-		7984C7E421721DB700BF0CAC /* cool.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cool.wav; sourceTree = "<group>"; };
+		79A0D4522175F452004EDA2D /* calm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = calm.mp3; sourceTree = "<group>"; };
+		79A0D4532175F452004EDA2D /* rainforest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = rainforest.mp3; sourceTree = "<group>"; };
+		79A0D4542175F453004EDA2D /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
+		79A0D4552175F453004EDA2D /* bright.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bright.mp3; sourceTree = "<group>"; };
+		79A0D4562175F453004EDA2D /* sunrise.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sunrise.mp3; sourceTree = "<group>"; };
+		79A0D4572175F453004EDA2D /* trumpet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = trumpet.mp3; sourceTree = "<group>"; };
+		79A0D4582175F453004EDA2D /* bounce.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bounce.mp3; sourceTree = "<group>"; };
+		79A0D4592175F453004EDA2D /* neon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = neon.mp3; sourceTree = "<group>"; };
+		79A0D45A2175F453004EDA2D /* soft.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = soft.mp3; sourceTree = "<group>"; };
+		79A0D45B2175F453004EDA2D /* jarring.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jarring.mp3; sourceTree = "<group>"; };
+		79A0D45C2175F453004EDA2D /* rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = rough.mp3; sourceTree = "<group>"; };
+		79A0D45D2175F454004EDA2D /* classic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = classic.mp3; sourceTree = "<group>"; };
 		79DEEE5C2174929A00DF80D3 /* SoundSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsTableViewController.swift; sourceTree = "<group>"; };
 		79DEEE5E2174A31600DF80D3 /* SoundsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundsTableViewController.swift; sourceTree = "<group>"; };
-		79DEEE602174AF8B00DF80D3 /* softwakeup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = softwakeup.wav; sourceTree = "<group>"; };
 		79DEEE622175170600DF80D3 /* empty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = empty.mp3; sourceTree = "<group>"; };
 		79DEEE652175937900DF80D3 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		79FECF08216F82270059D6EA /* lemmenap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lemmenap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,7 +65,6 @@
 		79FECF15216F822D0059D6EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		79FECF17216F822D0059D6EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79FECF1D216F831E0059D6EA /* SleepHistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepHistoryTableViewController.swift; sourceTree = "<group>"; };
-		79FECF1F216F97F00059D6EA /* SleepEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepEntry.swift; sourceTree = "<group>"; };
 		79FECF2121706A950059D6EA /* Quotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quotes.swift; sourceTree = "<group>"; };
 		9ED1A26FFE440FE3AC798988 /* Pods-lemmenap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lemmenap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-lemmenap/Pods-lemmenap.debug.xcconfig"; sourceTree = "<group>"; };
 		A4CF7CF821B44D4D14935E1B /* Pods_lemmenap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lemmenap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,9 +93,19 @@
 		7984C7E621721DC600BF0CAC /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				79DEEE602174AF8B00DF80D3 /* softwakeup.wav */,
+				79A0D4522175F452004EDA2D /* calm.mp3 */,
+				79A0D45A2175F453004EDA2D /* soft.mp3 */,
+				79A0D45D2175F454004EDA2D /* classic.mp3 */,
+				79A0D4562175F453004EDA2D /* sunrise.mp3 */,
+				79A0D45B2175F453004EDA2D /* jarring.mp3 */,
+				79A0D4542175F453004EDA2D /* beep.mp3 */,
+				79A0D4582175F453004EDA2D /* bounce.mp3 */,
+				79A0D4552175F453004EDA2D /* bright.mp3 */,
+				79A0D4572175F453004EDA2D /* trumpet.mp3 */,
+				79A0D4592175F453004EDA2D /* neon.mp3 */,
+				79A0D4532175F452004EDA2D /* rainforest.mp3 */,
+				79A0D45C2175F453004EDA2D /* rough.mp3 */,
 				79DEEE622175170600DF80D3 /* empty.mp3 */,
-				7984C7E421721DB700BF0CAC /* cool.wav */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -106,8 +136,8 @@
 				79FECF1D216F831E0059D6EA /* SleepHistoryTableViewController.swift */,
 				79DEEE5C2174929A00DF80D3 /* SoundSettingsTableViewController.swift */,
 				79DEEE5E2174A31600DF80D3 /* SoundsTableViewController.swift */,
-				79FECF1F216F97F00059D6EA /* SleepEntry.swift */,
 				79FECF0F216F82270059D6EA /* Main.storyboard */,
+				7983DE1921760DE500469DEE /* InfoTableViewController.swift */,
 				79FECF2121706A950059D6EA /* Quotes.swift */,
 				79387D362172005F003E50AA /* CustomButtonDesign.swift */,
 				7984C7E22172073E00BF0CAC /* CustomButtonBackgroundColor.swift */,
@@ -197,12 +227,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79A0D4662175F454004EDA2D /* soft.mp3 in Resources */,
+				79A0D4612175F454004EDA2D /* bright.mp3 in Resources */,
 				79FECF16216F822D0059D6EA /* LaunchScreen.storyboard in Resources */,
+				79A0D4652175F454004EDA2D /* neon.mp3 in Resources */,
+				79A0D4632175F454004EDA2D /* trumpet.mp3 in Resources */,
+				79A0D45E2175F454004EDA2D /* calm.mp3 in Resources */,
 				79DEEE632175170700DF80D3 /* empty.mp3 in Resources */,
 				79FECF13216F822D0059D6EA /* Assets.xcassets in Resources */,
-				7984C7E521721DB700BF0CAC /* cool.wav in Resources */,
-				79DEEE612174AF8B00DF80D3 /* softwakeup.wav in Resources */,
+				79A0D4672175F454004EDA2D /* jarring.mp3 in Resources */,
+				79A0D4682175F454004EDA2D /* rough.mp3 in Resources */,
 				79FECF11216F82270059D6EA /* Main.storyboard in Resources */,
+				79A0D4692175F454004EDA2D /* classic.mp3 in Resources */,
+				79A0D4602175F454004EDA2D /* beep.mp3 in Resources */,
+				79A0D45F2175F454004EDA2D /* rainforest.mp3 in Resources */,
+				79A0D4642175F454004EDA2D /* bounce.mp3 in Resources */,
+				79A0D4622175F454004EDA2D /* sunrise.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,10 +296,10 @@
 				79FECF0E216F82270059D6EA /* HomeViewController.swift in Sources */,
 				7984C7E32172073E00BF0CAC /* CustomButtonBackgroundColor.swift in Sources */,
 				79FECF2221706A950059D6EA /* Quotes.swift in Sources */,
-				79FECF20216F97F00059D6EA /* SleepEntry.swift in Sources */,
 				79DEEE5D2174929A00DF80D3 /* SoundSettingsTableViewController.swift in Sources */,
 				79387D372172005F003E50AA /* CustomButtonDesign.swift in Sources */,
 				79DEEE662175937900DF80D3 /* lemmenap.xcdatamodeld in Sources */,
+				7983DE1A21760DE500469DEE /* InfoTableViewController.swift in Sources */,
 				79DEEE5F2174A31600DF80D3 /* SoundsTableViewController.swift in Sources */,
 				79FECF0C216F82270059D6EA /* AppDelegate.swift in Sources */,
 			);
@@ -408,15 +448,18 @@
 			baseConfigurationReference = 9ED1A26FFE440FE3AC798988 /* Pods-lemmenap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A77JFZBDSV;
 				INFOPLIST_FILE = lemmenap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvesh.lemmenap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -427,15 +470,18 @@
 			baseConfigurationReference = 64BF189305B6F70BA0BD135C /* Pods-lemmenap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A77JFZBDSV;
 				INFOPLIST_FILE = lemmenap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvesh.lemmenap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

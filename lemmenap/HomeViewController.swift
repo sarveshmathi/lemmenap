@@ -11,6 +11,7 @@ import AVFoundation
 import SwiftySound //https://cocoapods.org/pods/SwiftySound
 import MediaPlayer
 import CoreData
+import UserNotifications
 
 
 class HomeViewController: UIViewController, NewSoundSelectedDelegate {
@@ -33,12 +34,14 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
     
     var timer = Timer()
         // timer made using https://medium.com/ios-os-x-development/build-an-stopwatch-with-swift-3-0-c7040818a10f
+    static var timerRunning: Bool = false
     
     var setSleepDurationInSeconds = 300
     var sleepStartTime: Date?
     var sleepEndTime: Date?
     
     var presetButtonArray: [UIButton]?
+    var currentButton: UIButton?
     
     var alarmSoundName: String?
     var alarmRepeat: Int?
@@ -60,12 +63,40 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         removeTabbarItemsText()
         updatePreferences()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
+    @objc func willEnterBackground(){
+        if HomeViewController.timerRunning {
+        sleepEndTime = Date()
+        saveEntry(sleepStart: sleepStartTime!, sleepEnd: sleepEndTime!)
+            print("saved entry when abruptly closed")
+        } else {
+            print("did not abruptly close, no entry saved")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         if !startButton.isSelected {
         updateQuoteLabel()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if launchedBefore  {
+            print("Not first launch.")
+        } else {
+            print("First launch, setting UserDefault.")
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            
+            let alert = UIAlertController(title: "Background Functionality", message: "This app is not designed to run in the background. Set the timer and leave app running in foreground.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+            
         }
     }
     
@@ -76,9 +107,9 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
 
     
     func updatePreferences(){
-        alarmSoundName = UserDefaults.standard.string(forKey: "alarmSoundName") ?? "cool"
+        alarmSoundName = UserDefaults.standard.string(forKey: "alarmSoundName") ?? "calm"
         alarmRepeat =  UserDefaults.standard.integer(forKey: "alarmRepeat")
-        alarmSoundUrl = Bundle.main.url(forResource: alarmSoundName, withExtension: "wav")
+        alarmSoundUrl = Bundle.main.url(forResource: alarmSoundName, withExtension: "mp3")
         alarmSound = Sound(url: alarmSoundUrl!)
     }
     
@@ -117,6 +148,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         sender.isSelected = !sender.isSelected
         
         if sender.isSelected {
+            currentButton = sender
             if sender.tag == 0 {
                 setSleepDuration = 15
                 durationSlider.setValue(15, animated: true)
@@ -133,6 +165,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         } else {
             setSleepDuration = 5
             durationSlider.setValue(5, animated: true)
+            currentButton = nil
         }
         print(setSleepDuration)
     }
@@ -157,22 +190,29 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
             }
             
             for button in presetButtonArray! {
+                
                 button.isEnabled = false
             }
+            
+            currentButton?.backgroundColor = currentButton?.selectedColor
+            currentButton?.setTitleColor(.black, for: .normal)
             
             durationSlider.isEnabled = false
             sleepStartTime = Date()
             Sound.play(file: "empty", fileExtension: "mp3", numberOfLoops: 0)
             runTimer()
-            
+            HomeViewController.timerRunning = true
+            print("timer running set to true")
             
         } else {
            Sound.stopAll()
+            
             UIView.animate(withDuration: 0.3) {
                 self.startButton.transform = CGAffineTransform.identity
             }
             sleepEndTime = Date()
             timer.invalidate()
+            HomeViewController.timerRunning = false
             saveEntry(sleepStart: sleepStartTime!, sleepEnd: sleepEndTime!)
             resetUI()
         }
@@ -203,6 +243,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
     func resetUI(){
         //UIApplication.shared.isIdleTimerDisabled = false
         
+        
         for button in presetButtonArray! {
             button.isSelected = false
         }
@@ -211,11 +252,16 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
             button.isEnabled = true
         }
         
+        currentButton?.backgroundColor = UIColor.black
+        currentButton?.setTitleColor(.white, for: .normal)
+        currentButton = nil
+        
         durationSlider.isEnabled = true
         durationSlider.setValue(5, animated: true)
         setSleepDuration = 5
         quoteLabel.font = quoteLabel.font.withSize(18)
         updateQuoteLabel()
+        print("timer stopped")
     }
     
     
@@ -228,6 +274,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         if setSleepDurationInSeconds < 1 {
             Sound.stopAll()
             timer.invalidate()
+            HomeViewController.timerRunning = false
             quoteLabel.text = "Wake Up!"
             playAlarm()
         } else {
@@ -244,13 +291,14 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
     }
     
     func playAlarm() {
+        MPVolumeView.setVolume(UserDefaults.standard.float(forKey: "alarmVolume"))
         alarmSound?.play(numberOfLoops: alarmRepeat!, completion: { (completed) in
             self.resetUI()
+            self.sleepEndTime = Date()
             self.startButton.isSelected = false
             UIView.animate(withDuration: 0.3) {
             self.startButton.transform = CGAffineTransform.identity
             }
-            self.sleepEndTime = Date()
             self.saveEntry(sleepStart: self.sleepStartTime!, sleepEnd: self.sleepEndTime!)
         })
     }
@@ -264,6 +312,16 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         }
     }
     
-    
+}
+
+extension MPVolumeView {
+    static func setVolume(_ volume: Float) {
+        let volumeView = MPVolumeView()
+        let slider = volumeView.subviews.first(where: { $0 is UISlider }) as? UISlider
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            slider?.value = volume;
+        }
+    }
 }
 
