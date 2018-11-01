@@ -64,6 +64,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         updatePreferences()
         
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
     }
     
     @objc func willEnterBackground(){
@@ -74,6 +75,8 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         } else {
             print("did not abruptly close, no entry saved")
         }
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,7 +95,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
             print("First launch, setting UserDefault.")
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             
-            let alert = UIAlertController(title: "Background Functionality", message: "This app is not designed to run in the background. Set the timer and leave app running in foreground.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Background Functionality", message: "This app is not designed to run in the background. Set the desired nap time and lock screen.", preferredStyle: .alert)
             let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
@@ -175,6 +178,8 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         for button in presetButtonArray! {
                 button.isSelected = false
         }
+        
+        currentButton = nil
         
         setSleepDuration = Int(durationSlider.value)
         print(setSleepDuration)
