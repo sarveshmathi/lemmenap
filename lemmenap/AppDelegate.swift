@@ -32,6 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         print("Alarm Volume: \(UserDefaults.standard.float(forKey: "alarmVolume"))")
         print("Alarm Repeat: \(UserDefaults.standard.integer(forKey: "alarmRepeat"))")
+        print("Reminder 1 \(UserDefaults.standard.object(forKey: "ReminderOne"))")
+        print("Reminder 2 \(UserDefaults.standard.object(forKey: "ReminderTwo"))")
+        print("Reminder 3 \(UserDefaults.standard.object(forKey: "ReminderThree"))")
+        print("Reminder 4 \(UserDefaults.standard.object(forKey: "ReminderFour"))")
         
         return true
     }

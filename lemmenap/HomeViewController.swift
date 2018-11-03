@@ -88,19 +88,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-        if launchedBefore  {
-            print("Not first launch.")
-        } else {
-            print("First launch, setting UserDefault.")
-            UserDefaults.standard.set(true, forKey: "launchedBefore")
-            
-            let alert = UIAlertController(title: "Background Functionality", message: "This app is not designed to run in the background. Set the desired nap time and lock screen.", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
-            
-        }
+        
     }
     
     func soundSelected(){
@@ -208,6 +196,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
             runTimer()
             HomeViewController.timerRunning = true
             print("timer running set to true")
+            BgFunctionalityAlert()
             
         } else {
            Sound.stopAll()
@@ -314,6 +303,26 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
                 item.title = ""
                 item.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0);
             }
+        }
+    }
+    
+    func BgFunctionalityAlert(){
+        let doNotShowAgain = UserDefaults.standard.bool(forKey: "DoNotShowAgain")
+        if doNotShowAgain  {
+            print("Background Functionality Notificaion Turned Off")
+        } else {
+            print("Bg functionality notfication shown")
+            
+            
+            let alert = UIAlertController(title: "Background Functionality", message: "This app is not designed to run in the background. Set the desired nap time and lock screen.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+            let action2 = UIAlertAction(title: "Do not show again", style: .default) { (action) in
+                UserDefaults.standard.set(true, forKey: "DoNotShowAgain")
+            }
+            alert.addAction(action)
+            alert.addAction(action2)
+            present(alert, animated: true, completion: nil)
+            
         }
     }
     
