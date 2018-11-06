@@ -32,10 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         print("Alarm Volume: \(UserDefaults.standard.float(forKey: "alarmVolume"))")
         print("Alarm Repeat: \(UserDefaults.standard.integer(forKey: "alarmRepeat"))")
-        print("Reminder 1 \(UserDefaults.standard.object(forKey: "ReminderOne"))")
-        print("Reminder 2 \(UserDefaults.standard.object(forKey: "ReminderTwo"))")
-        print("Reminder 3 \(UserDefaults.standard.object(forKey: "ReminderThree"))")
-        print("Reminder 4 \(UserDefaults.standard.object(forKey: "ReminderFour"))")
+        print("Reminder 1 \(UserDefaults.standard.object(forKey: "ReminderOne") ?? 0)")
+        print("Reminder 2 \(UserDefaults.standard.object(forKey: "ReminderTwo") ?? 0)")
+        print("Reminder 3 \(UserDefaults.standard.object(forKey: "ReminderThree") ?? 0)")
+        print("Reminder 4 \(UserDefaults.standard.object(forKey: "ReminderFour") ?? 0)")
+        
+        print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
         
         return true
     }

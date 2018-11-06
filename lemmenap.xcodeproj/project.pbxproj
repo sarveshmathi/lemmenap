@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		06F064DB7E5ACD942F3CFAFA /* Pods_lemmenap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CF7CF821B44D4D14935E1B /* Pods_lemmenap.framework */; };
 		79387D372172005F003E50AA /* CustomButtonDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79387D362172005F003E50AA /* CustomButtonDesign.swift */; };
+		7961DD4E2191234900EB0C3D /* lemmenap.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 7961DD4D2191234800EB0C3D /* lemmenap.xcdatamodel */; };
+		79781A752191264A0088A6F6 /* SleepEntryDetail+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79781A732191264A0088A6F6 /* SleepEntryDetail+CoreDataClass.swift */; };
+		79781A762191264A0088A6F6 /* SleepEntryDetail+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79781A742191264A0088A6F6 /* SleepEntryDetail+CoreDataProperties.swift */; };
 		7983DE1A21760DE500469DEE /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983DE1921760DE500469DEE /* InfoTableViewController.swift */; };
 		7984C7E32172073E00BF0CAC /* CustomButtonBackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984C7E22172073E00BF0CAC /* CustomButtonBackgroundColor.swift */; };
 		79A0D45E2175F454004EDA2D /* calm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4522175F452004EDA2D /* calm.mp3 */; };
@@ -26,7 +29,6 @@
 		79DEEE5D2174929A00DF80D3 /* SoundSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEEE5C2174929A00DF80D3 /* SoundSettingsTableViewController.swift */; };
 		79DEEE5F2174A31600DF80D3 /* SoundsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEEE5E2174A31600DF80D3 /* SoundsTableViewController.swift */; };
 		79DEEE632175170700DF80D3 /* empty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79DEEE622175170600DF80D3 /* empty.mp3 */; };
-		79DEEE662175937900DF80D3 /* lemmenap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 79DEEE642175937800DF80D3 /* lemmenap.xcdatamodeld */; };
 		79FECF0C216F82270059D6EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FECF0B216F82270059D6EA /* AppDelegate.swift */; };
 		79FECF0E216F82270059D6EA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FECF0D216F82270059D6EA /* HomeViewController.swift */; };
 		79FECF11216F82270059D6EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79FECF0F216F82270059D6EA /* Main.storyboard */; };
@@ -39,6 +41,9 @@
 /* Begin PBXFileReference section */
 		64BF189305B6F70BA0BD135C /* Pods-lemmenap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lemmenap.release.xcconfig"; path = "Pods/Target Support Files/Pods-lemmenap/Pods-lemmenap.release.xcconfig"; sourceTree = "<group>"; };
 		79387D362172005F003E50AA /* CustomButtonDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonDesign.swift; sourceTree = "<group>"; };
+		7961DD4D2191234800EB0C3D /* lemmenap.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = lemmenap.xcdatamodel; path = lemmenap.xcdatamodeld/lemmenap.xcdatamodel; sourceTree = "<group>"; };
+		79781A732191264A0088A6F6 /* SleepEntryDetail+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepEntryDetail+CoreDataClass.swift"; sourceTree = "<group>"; };
+		79781A742191264A0088A6F6 /* SleepEntryDetail+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepEntryDetail+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7983DE1921760DE500469DEE /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		7984C7E22172073E00BF0CAC /* CustomButtonBackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonBackgroundColor.swift; sourceTree = "<group>"; };
 		79A0D4522175F452004EDA2D /* calm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = calm.mp3; sourceTree = "<group>"; };
@@ -56,7 +61,6 @@
 		79DEEE5C2174929A00DF80D3 /* SoundSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsTableViewController.swift; sourceTree = "<group>"; };
 		79DEEE5E2174A31600DF80D3 /* SoundsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundsTableViewController.swift; sourceTree = "<group>"; };
 		79DEEE622175170600DF80D3 /* empty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = empty.mp3; sourceTree = "<group>"; };
-		79DEEE652175937900DF80D3 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		79FECF08216F82270059D6EA /* lemmenap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lemmenap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79FECF0B216F82270059D6EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		79FECF0D216F82270059D6EA /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -141,7 +145,9 @@
 				79FECF2121706A950059D6EA /* Quotes.swift */,
 				79387D362172005F003E50AA /* CustomButtonDesign.swift */,
 				7984C7E22172073E00BF0CAC /* CustomButtonBackgroundColor.swift */,
-				79DEEE642175937800DF80D3 /* lemmenap.xcdatamodeld */,
+				7961DD4D2191234800EB0C3D /* lemmenap.xcdatamodel */,
+				79781A732191264A0088A6F6 /* SleepEntryDetail+CoreDataClass.swift */,
+				79781A742191264A0088A6F6 /* SleepEntryDetail+CoreDataProperties.swift */,
 				79FECF12216F822D0059D6EA /* Assets.xcassets */,
 				79FECF14216F822D0059D6EA /* LaunchScreen.storyboard */,
 				79FECF17216F822D0059D6EA /* Info.plist */,
@@ -293,13 +299,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				79FECF1E216F831E0059D6EA /* SleepHistoryTableViewController.swift in Sources */,
+				79781A762191264A0088A6F6 /* SleepEntryDetail+CoreDataProperties.swift in Sources */,
 				79FECF0E216F82270059D6EA /* HomeViewController.swift in Sources */,
 				7984C7E32172073E00BF0CAC /* CustomButtonBackgroundColor.swift in Sources */,
 				79FECF2221706A950059D6EA /* Quotes.swift in Sources */,
 				79DEEE5D2174929A00DF80D3 /* SoundSettingsTableViewController.swift in Sources */,
 				79387D372172005F003E50AA /* CustomButtonDesign.swift in Sources */,
-				79DEEE662175937900DF80D3 /* lemmenap.xcdatamodeld in Sources */,
+				79781A752191264A0088A6F6 /* SleepEntryDetail+CoreDataClass.swift in Sources */,
 				7983DE1A21760DE500469DEE /* InfoTableViewController.swift in Sources */,
+				7961DD4E2191234900EB0C3D /* lemmenap.xcdatamodel in Sources */,
 				79DEEE5F2174A31600DF80D3 /* SoundsTableViewController.swift in Sources */,
 				79FECF0C216F82270059D6EA /* AppDelegate.swift in Sources */,
 			);
@@ -509,19 +517,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		79DEEE642175937800DF80D3 /* lemmenap.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				79DEEE652175937900DF80D3 /* Model.xcdatamodel */,
-			);
-			currentVersion = 79DEEE652175937900DF80D3 /* Model.xcdatamodel */;
-			path = lemmenap.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 79FECF00216F82270059D6EA /* Project object */;
 }

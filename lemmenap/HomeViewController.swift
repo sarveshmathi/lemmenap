@@ -48,7 +48,6 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
     var alarmSoundUrl: URL?
     var alarmSound: Sound?
 
-    var sleepHistory: [NSManagedObject] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -226,7 +225,6 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         
         do {
             try managedContext.save()
-            sleepHistory.append(sleepEntry)
         } catch let error as NSError {
             print("Could not save sleep entry. \(error), \(error.userInfo)")
         }

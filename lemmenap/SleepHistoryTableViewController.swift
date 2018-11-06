@@ -9,9 +9,11 @@
 import UIKit
 import CoreData
 
-class SleepHistoryTableViewController: UITableViewController {
+class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
     var sleepHistory: [NSManagedObject]?
+    var managedContext: NSManagedObjectContext?
+    var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,22 +23,32 @@ class SleepHistoryTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SleepEntryDetail")
-        let sort = NSSortDescriptor(key: "sleepStart", ascending: false)
-        fetchRequest.sortDescriptors = [sort]
-        
-        do {
-            sleepHistory = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch data. \(error), \(error.userInfo)")
-        }
-   
+        initialiseFetchedRequestsController()
         tableView.reloadData()
+        
     }
     
+    func initialiseFetchedRequestsController(){
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SleepEntryDetail")
+        //fetchRequest.fetchBatchSize = 20
+        let sort = NSSortDescriptor(key: "sleepStart", ascending: false)
+        fetchRequest.sortDescriptors = [sort]
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext!, sectionNameKeyPath: "sectionIdentifier", cacheName: "temp") as? NSFetchedResultsController<NSFetchRequestResult>
+        fetchedResultsController.delegate = self
+
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("Failed to initialize FetchedResultsController: \(error)")
+        }
+        
+        
+    }
+    
+
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
     }
@@ -44,32 +56,79 @@ class SleepHistoryTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        
+        if let frc = fetchedResultsController {
+            print("Number of sections: \(frc.sections!.count)")
+            return frc.sections!.count
+        }
+        
+        return 0
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return nil
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sleepHistory?.count ?? 0
+        
+        guard let sections = fetchedResultsController.sections else {
+            fatalError("No sections in fetchedResultsController")
+        }
+        let sectionInfo = sections[section]
+        
+        print("Number of rows in section: \(sectionInfo.numberOfObjects)")
+        return sectionInfo.numberOfObjects
+        
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SleepHistoryCell", for: indexPath)
         
         
-        let sleepDetail = sleepHistory![indexPath.row]
+        let sleepDetail = self.fetchedResultsController.object(at: indexPath) as! SleepEntryDetail
         
-        let sleepDuration = (sleepDetail.value(forKeyPath: "sleepEnd") as! Date).timeIntervalSince(sleepDetail.value(forKeyPath: "sleepStart") as! Date)
+        print("Here 1 - \(sleepDetail)")
+        print("here - \(sleepDetail.primitiveSectionIdentifier)")
         
-        cell.textLabel?.text = "\(dateFormatter(date: (sleepDetail.value(forKeyPath: "sleepStart") as! Date)))"
+        let sleepDuration = (sleepDetail.sleepEnd as Date).timeIntervalSince(sleepDetail.sleepStart as Date)
+        
+        cell.textLabel?.text = "\(dateFormatter(date: (sleepDetail.sleepStart) as Date))"
         cell.detailTextLabel?.text = "Duration: \(timeString(time: sleepDuration))"
         
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        guard let sectionInfo = fetchedResultsController?.sections?[section] else {
+            return nil
+        }
+        print("Section name before formatting \(sectionInfo.name)")
+        
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar.current
+        let formatTemplate = DateFormatter.dateFormat(fromTemplate: "MMMM YYYY", options: 0, locale: NSLocale.current)
+        formatter.dateFormat = formatTemplate ?? ""
+        
+        let numericSection: Int = Int(sectionInfo.name)!
+        let year: Int = numericSection/1000
+        let month: Int = numericSection - (year * 1000)
+        
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        let date: Date? = Calendar.current.date(from: dateComponents)
+        
+        var titleString: String? = nil
+        if let date = date {
+            titleString = formatter.string(from: date)
+        }
+        
+        return titleString
+    }
     
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int){
+        view.tintColor = UIColor.darkGray
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.white
+    }
     
     func dateFormatter(date: Date) -> String {
         let dateFormatter = DateFormatter()
@@ -97,29 +156,63 @@ class SleepHistoryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle:
         UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        let sleepEntry = sleepHistory![indexPath.row]
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        //guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        //let managedContext = appDelegate.persistentContainer.viewContext
         
         if editingStyle == .delete {
             
-            managedContext.delete(sleepEntry)
+            let sleepEntry = self.fetchedResultsController.object(at: indexPath) as! NSManagedObject
+            print(sleepEntry)
+            
+            managedContext!.delete(sleepEntry)
             do {
-               try managedContext.save()
+                try managedContext!.save()
+                //tableView.deleteRows(at: [indexPath], with: .fade)
             } catch let error as NSError {
                 print("Could not delete. \(error), \(error.userInfo)")
             }
-            
-            // Delete the row from the data source
-            sleepHistory?.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            
-            
         }
     }
     
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange sectionInfo: NSFetchedResultsSectionInfo,
+                    atSectionIndex sectionIndex: Int,
+                    for type: NSFetchedResultsChangeType) {
+        
+        switch (type) {
+        case .insert:
+            self.tableView.insertSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
+            break
+        case .delete:
+            self.tableView.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
+            break
+        default:
+            break
+        }
+        
+    }
 
-   
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .automatic)
+        case .move:
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+        }
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
 
  
 
