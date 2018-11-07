@@ -57,7 +57,6 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         if let frc = fetchedResultsController {
-            print("Number of sections: \(frc.sections!.count)")
             return frc.sections!.count
         }
         
@@ -71,8 +70,6 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
             fatalError("No sections in fetchedResultsController")
         }
         let sectionInfo = sections[section]
-        
-        print("Number of rows in section: \(sectionInfo.numberOfObjects)")
         return sectionInfo.numberOfObjects
         
     }
@@ -80,11 +77,7 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SleepHistoryCell", for: indexPath)
         
-        
         let sleepDetail = self.fetchedResultsController.object(at: indexPath) as! SleepEntryDetail
-        
-        print("Here 1 - \(sleepDetail)")
-        print("here - \(sleepDetail.primitiveSectionIdentifier)")
         
         let sleepDuration = (sleepDetail.sleepEnd as Date).timeIntervalSince(sleepDetail.sleepStart as Date)
         
@@ -99,7 +92,6 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
         guard let sectionInfo = fetchedResultsController?.sections?[section] else {
             return nil
         }
-        print("Section name before formatting \(sectionInfo.name)")
         
         let formatter = DateFormatter()
         formatter.calendar = Calendar.current
@@ -120,36 +112,59 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
             titleString = formatter.string(from: date)
         }
         
-        return "\(titleString!) - \(sumMonthData(section: section))"
+        return "\(titleString!) \nDaily Average: \(dailyAverageCalculator(section: section))"
     }
     
-    func sumMonthData(section: Int) -> String {
+    func dailyAverageCalculator(section: Int) -> String {
         guard let sectionInfo = fetchedResultsController?.sections?[section] else {
             return ""
         }
         
-        var sumForSection: TimeInterval = 0
+        var dictionary = [String:TimeInterval]()
         
         for object in sectionInfo.objects! as! [SleepEntryDetail]{
+            
             let diff = object.sleepEnd.timeIntervalSince(object.sleepStart as Date)
-            sumForSection += diff
+            
+            let sleepStartString = dateFormatterForDailyAverage(date: object.sleepStart as Date)
+            
+            dictionary[sleepStartString, default: 0] +=  diff
         }
-        let timeSumInString = timeString(time: sumForSection)
-        print("Sum for duration in section \(timeSumInString)")
-        return timeSumInString
+        
+        var sectionSum:TimeInterval = 0
+        var daysCount: Double = 0
+        
+        for entry in dictionary {
+            sectionSum += entry.value
+            daysCount += 1
+        }
+        
+        let dailyAverage = sectionSum/daysCount
+        let dailyAverageFormatted = timeString2(time: dailyAverage)
+        
+        return dailyAverageFormatted
+        
     }
     
         override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int){
             view.tintColor = UIColor.darkGray
             let header = view as! UITableViewHeaderFooterView
             header.textLabel?.textColor = UIColor.white
-            header.textLabel?.font = UIFont.systemFont(ofSize: 16)
+            header.textLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+            //header.textLabel?.text = header.textLabel?.text?.capitalized
         }
     
 //    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 //
 //        return 30
 //    }
+    
+    func dateFormatterForDailyAverage(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY MMM dd"
+        //http://nsdateformatter.com useful dataformatter resource
+        return dateFormatter.string(from:date)
+    }
     
     
     func dateFormatter(date: Date) -> String {
@@ -159,11 +174,33 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
         return dateFormatter.string(from:date)
     }
     
+    func timeString2(time: TimeInterval) -> String {
+        let hours = String(format: "%02i", Int(time)/3600)
+        let minutes = String(format: "%02i", Int(time)/60 % 60)
+        let seconds = String(format: "%02i", Int(time) % 60)
+        
+        if hours == "00" && minutes == "00" {
+            return "\(seconds) seconds (Nap More 😉)"
+        } else if hours == "00" {
+            return "\(minutes)m"
+        } else {
+            return "\(hours)h \(minutes)m"
+        }
+    }
+
     func timeString(time: TimeInterval) -> String {
-        let hours = Int(time)/3600
-        let minutes = Int(time)/60 % 60
-        let seconds = Int(time) % 60
-        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
+        let hours = String(format: "%02i", Int(time)/3600)
+        let minutes = String(format: "%02i", Int(time)/60 % 60)
+        let seconds = String(format: "%02i", Int(time) % 60)
+        if hours != "00" && hours == "01"{
+            return "\(hours) hr \(minutes)m \(seconds)s"
+        } else if hours != "00" && hours != "01"{
+            return "\(hours) hrs \(minutes)m \(seconds)s"
+        } else if hours == "00" {
+            return "\(minutes)m \(seconds)s"
+        } else {
+        return "\(hours):\(minutes):\(seconds)"
+        }
     }
 
    
