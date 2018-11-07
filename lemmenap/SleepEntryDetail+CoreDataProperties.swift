@@ -33,16 +33,26 @@ extension SleepEntryDetail {
         return tmp!
     }
     
-    var sleepStartTemp: Date? {
-        get {
-            return sleepStart as Date?
-        }
-        set(newDate){
-            willChangeValue(forKey: "sleepStart")
-            self.primitiveTimeStamp = newDate
-            didChangeValue(forKey: "sleepStart")
-            self.primitiveSectionIdentifier = nil
-        }
-
-    }
+//     // If the time stamp changes, the section identifier become invalid.
+//    var sleepStartTemp: Date? {
+//        get {
+//            return sleepStart as Date?
+//        }
+//        set(newDate){
+//            willChangeValue(forKey: "sleepStart")
+//            self.primitiveTimeStamp = newDate
+//            didChangeValue(forKey: "sleepStart")
+//            self.primitiveSectionIdentifier = nil
+//        }
+//
+//    }
+    
+    
+//    #pragma mark - Key path dependencies
+//      // in Objective C
+//    + (NSSet *)keyPathsForValuesAffectingSectionIdentifier
+//    {
+//    // If the value of timeStamp changes, the section identifier may change as well.
+//    return [NSSet setWithObject:@"timeStamp"];
+//    }
 }

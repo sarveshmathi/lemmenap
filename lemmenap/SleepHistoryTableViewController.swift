@@ -11,7 +11,6 @@ import CoreData
 
 class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
-    var sleepHistory: [NSManagedObject]?
     var managedContext: NSManagedObjectContext?
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     
@@ -36,7 +35,7 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
         //fetchRequest.fetchBatchSize = 20
         let sort = NSSortDescriptor(key: "sleepStart", ascending: false)
         fetchRequest.sortDescriptors = [sort]
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext!, sectionNameKeyPath: "sectionIdentifier", cacheName: "temp") as? NSFetchedResultsController<NSFetchRequestResult>
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext!, sectionNameKeyPath: "sectionIdentifier", cacheName: nil) as? NSFetchedResultsController<NSFetchRequestResult>
         fetchedResultsController.delegate = self
 
         do {
@@ -121,18 +120,41 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
             titleString = formatter.string(from: date)
         }
         
-        return titleString
+        return "\(titleString!) - \(sumMonthData(section: section))"
     }
     
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int){
-        view.tintColor = UIColor.darkGray
-        let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.white
+    func sumMonthData(section: Int) -> String {
+        guard let sectionInfo = fetchedResultsController?.sections?[section] else {
+            return ""
+        }
+        
+        var sumForSection: TimeInterval = 0
+        
+        for object in sectionInfo.objects! as! [SleepEntryDetail]{
+            let diff = object.sleepEnd.timeIntervalSince(object.sleepStart as Date)
+            sumForSection += diff
+        }
+        let timeSumInString = timeString(time: sumForSection)
+        print("Sum for duration in section \(timeSumInString)")
+        return timeSumInString
     }
+    
+        override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int){
+            view.tintColor = UIColor.darkGray
+            let header = view as! UITableViewHeaderFooterView
+            header.textLabel?.textColor = UIColor.white
+            header.textLabel?.font = UIFont.systemFont(ofSize: 16)
+        }
+    
+//    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//
+//        return 30
+//    }
+    
     
     func dateFormatter(date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE, MMM d, yyyy '-' h:mm a"
+        dateFormatter.dateFormat = "EEEE, MMM dd '-' h:mm a"
          //http://nsdateformatter.com useful dataformatter resource
         return dateFormatter.string(from:date)
     }
@@ -182,10 +204,10 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
         
         switch (type) {
         case .insert:
-            self.tableView.insertSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
+            self.tableView.insertSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .none)
             break
         case .delete:
-            self.tableView.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
+            self.tableView.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .none)
             break
         default:
             break
@@ -200,11 +222,11 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+            tableView.insertRows(at: [newIndexPath!], with: .none)
         case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.deleteRows(at: [indexPath!], with: .none)
         case .update:
-            tableView.reloadRows(at: [indexPath!], with: .automatic)
+            tableView.reloadRows(at: [indexPath!], with: .none)
         case .move:
             tableView.moveRow(at: indexPath!, to: newIndexPath!)
         }
