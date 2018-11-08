@@ -40,7 +40,6 @@ struct Quotes {
         "Nap fact: \nNapping is better than drinking caffeine because caffeine can decrease memory performance.",
         "Nap fact: \nNaps at work in Japan are called inemur, which means, “to be asleep while present.” Inemur is viewed as exhaustion from working hard and sacrificing sleep for the job. Many people even fake napping to look committed to their job.",
         "Nap fact: \nA British study found that just knowing a nap was coming was enough to lower blood pressure."]
-        
     
 }
 

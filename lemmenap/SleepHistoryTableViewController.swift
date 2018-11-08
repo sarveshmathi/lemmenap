@@ -112,7 +112,7 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
             titleString = formatter.string(from: date)
         }
         
-        return "\(titleString!) \nDaily Average: \(dailyAverageCalculator(section: section))"
+        return "\(titleString!) \nDay Average: \(dailyAverageCalculator(section: section))"
     }
     
     func dailyAverageCalculator(section: Int) -> String {
@@ -121,6 +121,7 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
         }
         
         var dictionary = [String:TimeInterval]()
+       // var daysCompleted:Double = 0
         
         for object in sectionInfo.objects! as! [SleepEntryDetail]{
             
@@ -128,11 +129,16 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
             
             let sleepStartString = dateFormatterForDailyAverage(date: object.sleepStart as Date)
             
+//            if Double(dateFormatterForDaysCompletedInMonth(date: object.sleepStart as Date))! > daysCompleted {
+//                daysCompleted = Double(dateFormatterForDaysCompletedInMonth(date: object.sleepStart as Date))!
+//            }
+            
             dictionary[sleepStartString, default: 0] +=  diff
         }
         
         var sectionSum:TimeInterval = 0
         var daysCount: Double = 0
+
         
         for entry in dictionary {
             sectionSum += entry.value
@@ -159,10 +165,17 @@ class SleepHistoryTableViewController: UITableViewController, NSFetchedResultsCo
 //        return 30
 //    }
     
+//    func dateFormatterForDaysCompletedInMonth(date: Date) -> String {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "dd"
+//        print("no of days completed: \(dateFormatter.string(from:date))")
+//        return dateFormatter.string(from:date)
+//    }
+    
+    
     func dateFormatterForDailyAverage(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY MMM dd"
-        //http://nsdateformatter.com useful dataformatter resource
         return dateFormatter.string(from:date)
     }
     

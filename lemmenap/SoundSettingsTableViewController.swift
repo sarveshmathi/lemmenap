@@ -185,144 +185,77 @@ class SoundSettingsTableViewController: UITableViewController {
         reminderLabelOne.text = dateFormatter(date: UserDefaults.standard.object(forKey: "ReminderOne") as? Date ?? stringToDate(stringDate: "11:00"))
         reminderLabelTwo.text = dateFormatter(date: UserDefaults.standard.object(forKey: "ReminderTwo") as? Date ?? stringToDate(stringDate: "13:00"))
         reminderLabelThree.text = dateFormatter(date: UserDefaults.standard.object(forKey: "ReminderThree") as? Date ?? stringToDate(stringDate: "15:00"))
-        reminderLabelFour.text = dateFormatter(date: UserDefaults.standard.object(forKey: "ReminderFour") as? Date ?? stringToDate(stringDate: "19:00"))
+        reminderLabelFour.text = dateFormatter(date: UserDefaults.standard.object(forKey: "ReminderFour") as? Date ?? stringToDate(stringDate: "17:00"))
     }
     
-    func loadReminderOne(){
+    func loadReminder(reminderNumber: String, switchNumber: UISwitch, defaultTime: String){
         let center = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
         content.title = "Time for a nap?"
         content.body = "Take a revitalising nap and conquer the day"
         content.sound = UNNotificationSound.default
         
-        let reminderTimeOneInDate = UserDefaults.standard.object(forKey: "ReminderOne")
-        let reminderTimeOne = Calendar.current.dateComponents([.hour, .minute], from: reminderTimeOneInDate as? Date ?? stringToDate(stringDate: "11:00"))
-        print(reminderTimeOne)
-        let triggerTimeOne = reminderTimeOne
-        let triggerOne = UNCalendarNotificationTrigger(dateMatching: triggerTimeOne, repeats: true)
-        let identifierOne = "ReminderOne"
-        
-        if reminderSwitchOne.isOn {
-           let request = UNNotificationRequest(identifier: identifierOne, content: content, trigger: triggerOne)
-            center.add(request, withCompletionHandler: nil)
-        } else if !reminderSwitchOne.isOn {
-            center.removePendingNotificationRequests(withIdentifiers: ["ReminderOne"])
-        }
-        
-    }
-    
-    func loadReminderTwo(){
-        let center = UNUserNotificationCenter.current()
-        let content = UNMutableNotificationContent()
-        content.title = "Time for a nap?"
-        content.body = "Take a revitalising nap and conquer the day"
-        content.sound = UNNotificationSound.default
-        
-        let reminderTimeInDate = UserDefaults.standard.object(forKey: "ReminderTwo")
-        let reminderTime = Calendar.current.dateComponents([.hour, .minute], from: reminderTimeInDate as? Date ?? stringToDate(stringDate: "13:00"))
+        let reminderTimeInDate = UserDefaults.standard.object(forKey: reminderNumber)
+        let reminderTime = Calendar.current.dateComponents([.hour, .minute], from: reminderTimeInDate as? Date ?? stringToDate(stringDate: defaultTime))
         print(reminderTime)
         let triggerTime = reminderTime
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTime, repeats: true)
-        let identifier = "ReminderTwo"
+        let identifier = reminderNumber
         
-        if reminderSwitchOne.isOn {
+        if switchNumber.isOn {
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             center.add(request, withCompletionHandler: nil)
-        } else if !reminderSwitchOne.isOn {
-            center.removePendingNotificationRequests(withIdentifiers: ["ReminderTwo"])
-        }
-    }
-    
-    func loadReminderThree(){
-        let center = UNUserNotificationCenter.current()
-        let content = UNMutableNotificationContent()
-        content.title = "Time for a nap?"
-        content.body = "Take a revitalising nap and conquer the day"
-        content.sound = UNNotificationSound.default
-        
-        let reminderTimeInDate = UserDefaults.standard.object(forKey: "ReminderThree")
-        let reminderTime = Calendar.current.dateComponents([.hour, .minute], from: reminderTimeInDate as? Date ?? stringToDate(stringDate: "15:00"))
-        print(reminderTime)
-        let triggerTime = reminderTime
-        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTime, repeats: true)
-        let identifier = "ReminderThree"
-        
-        if reminderSwitchOne.isOn {
-            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-            center.add(request, withCompletionHandler: nil)
-        } else if !reminderSwitchOne.isOn {
-            center.removePendingNotificationRequests(withIdentifiers: ["ReminderThree"])
-        }
-    }
-    
-    func loadReminderFour(){
-        let center = UNUserNotificationCenter.current()
-        let content = UNMutableNotificationContent()
-        content.title = "Time for a nap?"
-        content.body = "Take a revitalising nap and conquer the day"
-        content.sound = UNNotificationSound.default
-        
-        let reminderTimeInDate = UserDefaults.standard.object(forKey: "ReminderFour")
-        let reminderTime = Calendar.current.dateComponents([.hour, .minute], from: reminderTimeInDate as? Date ?? stringToDate(stringDate: "19:00"))
-        print(reminderTime)
-        let triggerTime = reminderTime
-        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTime, repeats: true)
-        let identifier = "ReminderFour"
-        
-        if reminderSwitchOne.isOn {
-            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-            center.add(request, withCompletionHandler: nil)
-        } else if !reminderSwitchOne.isOn {
-            center.removePendingNotificationRequests(withIdentifiers: ["ReminderFour"])
+        } else if !switchNumber.isOn {
+            center.removePendingNotificationRequests(withIdentifiers: [reminderNumber])
         }
     }
     
     @IBAction func reminderSwitchOne(_ sender: Any) {
         UserDefaults.standard.set(reminderSwitchOne.isOn, forKey: "ReminderOneSwitch")
-        loadReminderOne()
+        loadReminder(reminderNumber: "ReminderOne", switchNumber: reminderSwitchOne, defaultTime: "11:00")
     }
     
     @IBAction func reminderSwitchTwo(_ sender: Any) {
         UserDefaults.standard.set(reminderSwitchTwo.isOn, forKey: "ReminderTwoSwitch")
-        loadReminderTwo()
+        loadReminder(reminderNumber: "ReminderTwo", switchNumber: reminderSwitchTwo, defaultTime: "13:00")
     }
     
     @IBAction func reminderSwitchThree(_ sender: Any) {
         UserDefaults.standard.set(reminderSwitchThree.isOn, forKey: "ReminderThreeSwitch")
-        loadReminderThree()
+        loadReminder(reminderNumber: "ReminderThree", switchNumber: reminderSwitchThree, defaultTime: "15:00")
     }
     
     @IBAction func reminderSwitchFour(_ sender: Any) {
         UserDefaults.standard.set(reminderSwitchFour.isOn, forKey: "ReminderFourSwitch")
-        loadReminderFour()
+        loadReminder(reminderNumber: "ReminderFour", switchNumber: reminderSwitchFour, defaultTime: "17:00")
     }
     
     @IBAction func datePickerOne(_ sender: Any) {
         let datePicked = datePickerOne.date
         UserDefaults.standard.set(datePicked, forKey: "ReminderOne")
         reminderLabelOne.text = dateFormatter(date: datePicked)
-        loadReminderOne()
+        loadReminder(reminderNumber: "ReminderOne", switchNumber: reminderSwitchOne, defaultTime: "11:00")
     }
     
     @IBAction func datePickerTwo(_ sender: Any) {
         reminderLabelTwo.text = dateFormatter(date: datePickerTwo.date)
         let datePicked = datePickerTwo.date
         UserDefaults.standard.set(datePicked, forKey: "ReminderTwo")
-        loadReminderTwo()
+        loadReminder(reminderNumber: "ReminderTwo", switchNumber: reminderSwitchTwo, defaultTime: "13:00")
     }
     
     @IBAction func datePickerThree(_ sender: Any) {
         reminderLabelThree.text = dateFormatter(date: datePickerThree.date)
         let datePicked = datePickerThree.date
         UserDefaults.standard.set(datePicked, forKey: "ReminderThree")
-        loadReminderThree()
+        loadReminder(reminderNumber: "ReminderThree", switchNumber: reminderSwitchThree, defaultTime: "15:00")
     }
     
     @IBAction func datePickerFour(_ sender: Any) {
         reminderLabelFour.text = dateFormatter(date: datePickerFour.date)
         let datePicked = datePickerFour.date
         UserDefaults.standard.set(datePicked, forKey: "ReminderFour")
-        loadReminderFour()
+        loadReminder(reminderNumber: "ReminderFour", switchNumber: reminderSwitchFour, defaultTime: "17:00")
     }
     
     func initialiseDatePickerTextColor(){

@@ -125,6 +125,9 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         
     }
     
+    func testFunction(duration: NSNumber){
+        print("Siri shortcut run successfully")
+    }
     
     
     @IBAction func presetTimeSelected(_ sender: UIButton) {

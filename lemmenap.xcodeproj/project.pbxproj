@@ -14,6 +14,7 @@
 		79781A762191264A0088A6F6 /* SleepEntryDetail+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79781A742191264A0088A6F6 /* SleepEntryDetail+CoreDataProperties.swift */; };
 		7983DE1A21760DE500469DEE /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983DE1921760DE500469DEE /* InfoTableViewController.swift */; };
 		7984C7E32172073E00BF0CAC /* CustomButtonBackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984C7E22172073E00BF0CAC /* CustomButtonBackgroundColor.swift */; };
+		799CABF92193E8BB001B2BBE /* StartTimerIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 799CABF82193E8BB001B2BBE /* StartTimerIntent.intentdefinition */; };
 		79A0D45E2175F454004EDA2D /* calm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4522175F452004EDA2D /* calm.mp3 */; };
 		79A0D45F2175F454004EDA2D /* rainforest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4532175F452004EDA2D /* rainforest.mp3 */; };
 		79A0D4602175F454004EDA2D /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 79A0D4542175F453004EDA2D /* beep.mp3 */; };
@@ -38,6 +39,19 @@
 		79FECF2221706A950059D6EA /* Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FECF2121706A950059D6EA /* Quotes.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		799CABE42193C6D4001B2BBE /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		64BF189305B6F70BA0BD135C /* Pods-lemmenap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lemmenap.release.xcconfig"; path = "Pods/Target Support Files/Pods-lemmenap/Pods-lemmenap.release.xcconfig"; sourceTree = "<group>"; };
 		79387D362172005F003E50AA /* CustomButtonDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonDesign.swift; sourceTree = "<group>"; };
@@ -46,6 +60,11 @@
 		79781A742191264A0088A6F6 /* SleepEntryDetail+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepEntryDetail+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7983DE1921760DE500469DEE /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		7984C7E22172073E00BF0CAC /* CustomButtonBackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonBackgroundColor.swift; sourceTree = "<group>"; };
+		799CABBF2193C274001B2BBE /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		799CABCF2193C6D3001B2BBE /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		799CABF82193E8BB001B2BBE /* StartTimerIntent.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = StartTimerIntent.intentdefinition; sourceTree = "<group>"; };
+		799CAC0D2193EF17001B2BBE /* SwiftySound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftySound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		799CAC122193F19A001B2BBE /* SwiftySound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftySound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79A0D4522175F452004EDA2D /* calm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = calm.mp3; sourceTree = "<group>"; };
 		79A0D4532175F452004EDA2D /* rainforest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = rainforest.mp3; sourceTree = "<group>"; };
 		79A0D4542175F453004EDA2D /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
@@ -89,7 +108,11 @@
 		0F9A1830D5242EE77CA535A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				799CAC122193F19A001B2BBE /* SwiftySound.framework */,
+				799CAC0D2193EF17001B2BBE /* SwiftySound.framework */,
+				799CABBF2193C274001B2BBE /* Intents.framework */,
 				A4CF7CF821B44D4D14935E1B /* Pods_lemmenap.framework */,
+				799CABCF2193C6D3001B2BBE /* IntentsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -151,6 +174,7 @@
 				79FECF12216F822D0059D6EA /* Assets.xcassets */,
 				79FECF14216F822D0059D6EA /* LaunchScreen.storyboard */,
 				79FECF17216F822D0059D6EA /* Info.plist */,
+				799CABF82193E8BB001B2BBE /* StartTimerIntent.intentdefinition */,
 				7984C7E621721DC600BF0CAC /* Sounds */,
 			);
 			path = lemmenap;
@@ -177,6 +201,7 @@
 				79FECF05216F82270059D6EA /* Frameworks */,
 				79FECF06216F82270059D6EA /* Resources */,
 				4BA7B51463467A571845FA7D /* [CP] Embed Pods Frameworks */,
+				799CABE42193C6D4001B2BBE /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -193,17 +218,23 @@
 		79FECF00216F82270059D6EA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1000;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Sarvesh;
 				TargetAttributes = {
 					79FECF07216F82270059D6EA = {
 						CreatedOnToolsVersion = 10.0;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 0;
 							};
 							com.apple.HealthKit = {
+								enabled = 0;
+							};
+							com.apple.Siri = {
 								enabled = 0;
 							};
 						};
@@ -298,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				799CABF92193E8BB001B2BBE /* StartTimerIntent.intentdefinition in Sources */,
 				79FECF1E216F831E0059D6EA /* SleepHistoryTableViewController.swift in Sources */,
 				79781A762191264A0088A6F6 /* SleepEntryDetail+CoreDataProperties.swift in Sources */,
 				79FECF0E216F82270059D6EA /* HomeViewController.swift in Sources */,
