@@ -12,6 +12,7 @@ import SwiftySound //https://cocoapods.org/pods/SwiftySound
 import MediaPlayer
 import CoreData
 import UserNotifications
+import Intents
 
 
 class HomeViewController: UIViewController, NewSoundSelectedDelegate {
@@ -50,6 +51,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
 
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         durationSlider.setValue(5, animated: false)
@@ -125,9 +127,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
         
     }
     
-    func testFunction(duration: NSNumber){
-        print("Siri shortcut run successfully")
-    }
+    
     
     
     @IBAction func presetTimeSelected(_ sender: UIButton) {
@@ -199,6 +199,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
             HomeViewController.timerRunning = true
             print("timer running set to true")
             BgFunctionalityAlert()
+            donateShortcut()
             
         } else {
            Sound.stopAll()
@@ -211,6 +212,7 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
             HomeViewController.timerRunning = false
             saveEntry(sleepStart: sleepStartTime!, sleepEnd: sleepEndTime!)
             resetUI()
+           // actionForSiri()
         }
 
        
@@ -324,6 +326,37 @@ class HomeViewController: UIViewController, NewSoundSelectedDelegate {
             alert.addAction(action2)
             present(alert, animated: true, completion: nil)
             
+        }
+    }
+    
+//    func actionForSiri(){
+//        let activity = NSUserActivity(activityType: "com.sarvesh.lemmenap.startTimer")
+//        activity.title = "Start 10 minute Nap Timer"
+//        activity.userInfo = ["duration":10]
+//        activity.isEligibleForSearch = true
+//        if #available(iOS 12.0, *) {
+//            activity.isEligibleForPrediction = true
+//            activity.persistentIdentifier = "com.sarvesh.lemmenap.startTimer"
+//            activity.suggestedInvocationPhrase = "Set nap timer for 10 minutes"
+//        } else {
+//            // Fallback on earlier versions
+//        }
+//
+//        view.userActivity = activity
+//        activity.becomeCurrent()
+//    }
+    
+    func donateShortcut(){
+        if #available(iOS 12.0, *) {
+            let intent = StartTimerIntent()
+            intent.duration = setSleepDuration as NSNumber
+            
+            let interaction = INInteraction(intent: intent, response: nil)
+            interaction.donate { (error) in
+                
+            }
+        } else {
+            // Fallback on earlier versions
         }
     }
     

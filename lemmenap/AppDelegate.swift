@@ -14,6 +14,21 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        if #available(iOS 12.0, *) {
+        if userActivity.activityType == "StartTimerIntent",
+            let intent = userActivity.interaction?.intent as? StartTimerIntent {
+            let navVc = window?.rootViewController as! UITabBarController
+            let destinationVC = navVc.viewControllers?.first as! HomeViewController
+            destinationVC.setSleepDuration = Int(intent.duration ?? 15) 
+            destinationVC.startStopButtonTapped(destinationVC.startButton)
+            }
+            } else {
+                // Fallback on earlier versions
+            }
+        return true
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

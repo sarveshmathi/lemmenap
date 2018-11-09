@@ -23,6 +23,7 @@
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>StartTimerIntent</string>
+		<string>com.sarvesh.lemmenap.startTimer</string>
 	</array>
 	<key>UIApplicationExitsOnSuspend</key>
 	<true/>
